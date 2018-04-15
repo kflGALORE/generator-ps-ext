@@ -1,5 +1,5 @@
 = Photoshop Extension Panel Generator
 
-Yeoman generarator for setting up the development of Photoshop extensin panels.
+Yeoman generarator for setting up the development of Photoshop extension panels.
 
 This is still WIP (Work-In-Progress), so don’t use it yet.

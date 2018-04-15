@@ -1,0 +1,14 @@
+{
+  "name": "generator-ps-ext",
+  "version": "0.1.0",
+  "description": "Yeoman generarator for setting up the development of Photoshop extension panels",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^2.0.3"
+  }
+}
