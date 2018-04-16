@@ -45,15 +45,7 @@ module.exports = class extends Generator {
 			});
 	};
 	
-	debug() {
-		console.log('context: ' + JSON.stringify(this.context));
-	};
-	
 	writing() {
-		console.log('writing ...');
-		console.log('sourceRoot=' + this.sourceRoot());
-		console.log('destinationPath=' + this.destinationPath('tmp'));
-		console.log('templateGlobPath=' + this.templatePath('**'));
 		this.fs.copyTpl(this.templatePath('**'), this.destinationPath(this.context.extension.id), this.context);
 	};
 
