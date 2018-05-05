@@ -1,5 +1,9 @@
 {
   "name": "<%-extension.id%>",
   "version": "1.0.0",
+  "devDependencies": {
+    "del": "~3.0.0",
+    "gulp": "~3.9.1",
+    "gulp-ejs": "~3.1.2"
   }
 }
