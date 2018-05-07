@@ -1,6 +1,7 @@
 const Generator = require('yeoman-generator');
 
 const fs = require('fs');
+const path = require('path');
 const makedir = require('make-dir');
 const http = require('request');
 
@@ -19,6 +20,12 @@ module.exports = class extends Generator {
 				this.extension.name = answers.extensionName;
 				this.extension.photoshop.versionName = answers.psVersionName[0];
 			}
+		}
+	}
+	
+	initializing () {
+		if (! (this._isRunningOnWin() || this._isRunningOnMac())) {
+			throw new Error('This yo generator must be run on Windows or Mac platform.');
 		}
 	}
 	
@@ -53,10 +60,18 @@ module.exports = class extends Generator {
 	configuring() {
 		this.extensionPath = this.destinationPath(this.context.extension.id);
 		
+		if (this._isRunningOnWin()) {
+			this.context.extension.cep.extensionsDir = path.normalize(process.env.APPDATA + '/Adobe/CEP/extensions');
+		} else {
+			this.context.extension.cep.extensionsDir = path.normalize(process.env.HOME + '/Library/Application Support/Adobe/CEP/extensions');
+		}
+		
 		const psMapping = psMappings[this.context.extension.photoshop.versionName];
 		this.context.extension.photoshop.versionId = psMapping.photoshop.versionId;
 		this.context.extension.cep.versionId = psMapping.cep.versionId;
 		this.context.extension.cep.downloadURL = psMapping.cep.downloadURL;
+		
+		this.fs.writeJSON(this.extensionPath + '/ps-extension.js', this.context.extension);
 	};
 	
 	writing() {
@@ -84,9 +99,7 @@ module.exports = class extends Generator {
 		var cepBaseURL = this.context.extension.cep.downloadURL;
 		var targetDir = this.extensionPath + '/' + module + '/libs/cep';
 		
-		if (! fs.existsSync(targetDir)) {
-			makedir.sync(targetDir);
-		}
+		this._ensureDirExists(targetDir);
 		
 		for (let i = 0; i < cepFileNames.length; i++) {
 			let cepFileName = cepFileNames[i];
@@ -101,6 +114,20 @@ module.exports = class extends Generator {
 				.pipe(fs.createWriteStream(targetFile));
 		}
 	};
+	
+	_isRunningOnWin() {
+		return process.platform.startsWith('win');
+	};
+	
+	_isRunningOnMac() {
+		return process.platform === 'darwin';
+	};
+	
+	_ensureDirExists(dir) {
+		if (! fs.existsSync(dir)) {
+			makedir.sync(dir);
+		}
+	}
 
 };
 
