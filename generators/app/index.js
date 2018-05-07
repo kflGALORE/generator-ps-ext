@@ -61,9 +61,9 @@ module.exports = class extends Generator {
 		this.extensionPath = this.destinationPath(this.context.extension.id);
 		
 		if (this._isRunningOnWin()) {
-			this.context.extension.cep.extensionsDir = path.normalize(process.env.APPDATA + '/Adobe/CEP/extensions');
+			this.context.extension.deploymentDir = path.normalize(process.env.APPDATA + '/Adobe/CEP/extensions/' + this.context.extension.id);
 		} else {
-			this.context.extension.cep.extensionsDir = path.normalize(process.env.HOME + '/Library/Application Support/Adobe/CEP/extensions');
+			this.context.extension.deploymentDir = path.normalize(process.env.HOME + '/Library/Application Support/Adobe/CEP/extensions/' + this.context.extension.id);
 		}
 		
 		const psMapping = psMappings[this.context.extension.photoshop.versionName];
