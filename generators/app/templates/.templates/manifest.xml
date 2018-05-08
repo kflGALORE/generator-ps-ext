@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="<%%-cep.versionId%>" 
+                   ExtensionBundleId="<%%-id%>" 
+                   ExtensionBundleName="<%%-name%>" 
+                   ExtensionBundleVersion="1.0.0"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<ExtensionList>
+		<Extension Id="<%%-id%>.panel" Version="1.0" />
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+			<Host Name="PHXS" Version="<%%-photoshop.versionId%>" />
+			<Host Name="PHSP" Version="<%%-photoshop.versionId%>" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="<%%-cep.versionId%>" />
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="<%%-id%>.panel">
+			<DispatchInfo >
+				<Resources>
+					<MainPath>./ui/index.html</MainPath>
+					<ScriptPath>./host/script.jsx</ScriptPath>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu><%%-name%></Menu>
+					<Geometry>
+						<Size>
+							<Height>200</Height>
+							<Width>200</Width>
+						</Size>
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>
