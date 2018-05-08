@@ -60,12 +60,15 @@ module.exports = class extends Generator {
 	configuring() {
 		this.extensionPath = this.destinationPath(this.context.extension.id);
 		
+		// apply defaults
 		if (this._isRunningOnWin()) {
 			this.context.extension.deploymentDir = path.normalize(process.env.APPDATA + '/Adobe/CEP/extensions/' + this.context.extension.id);
 		} else {
 			this.context.extension.deploymentDir = path.normalize(process.env.HOME + '/Library/Application Support/Adobe/CEP/extensions/' + this.context.extension.id);
 		}
+		this.context.extension.photoshop.debugPort = 9080;
 		
+		// map versions
 		const psMapping = psMappings[this.context.extension.photoshop.versionName];
 		this.context.extension.photoshop.versionId = psMapping.photoshop.versionId;
 		this.context.extension.cep.versionId = psMapping.cep.versionId;
@@ -75,7 +78,13 @@ module.exports = class extends Generator {
 	};
 	
 	writing() {
-		this.fs.copyTpl(this.templatePath('**'), this.extensionPath, this.context);
+		this.fs.copyTpl(
+			this.templatePath('**'), 
+			this.extensionPath, 
+			this.context, 
+			{}, 						// templateOptions: use defaults 
+			{globOptions: {dot: true}} 	// copyOptions: include '.xxx' files and directories
+		);
 	};
 	
 	install() {

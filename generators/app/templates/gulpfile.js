@@ -21,11 +21,11 @@ gulp.task('host:clean', () => {
 });
 
 gulp.task('build', ['ui:build', 'host:build'], (done) => {
-	gulp.src('.templates/manifest.ejs')
+	gulp.src('.templates/manifest.xml')
 		.pipe(ejs(psExtension, {}, {ext: '.xml'}))
 		.pipe(gulp.dest('dist/CSXS'))
         .on('end', () => {
-            gulp.src('.templates/.debug.ejs')
+            gulp.src('.templates/.debug')
                 .pipe(ejs(psExtension, {}, {ext: ''}))
                 .pipe(gulp.dest('dist'))
                 .on('end', () => {
